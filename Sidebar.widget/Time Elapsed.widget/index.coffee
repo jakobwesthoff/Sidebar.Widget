@@ -14,7 +14,7 @@ options =
 
 command: "osascript 'Sidebar.widget/Time Elapsed.widget/Time Elapsed.applescript' \"#{options.theDate}\""
 
-refreshFrequency: '1h'
+refreshFrequency: options.widgetEnable is false ? false : '1h'
 
 style: """
   white1 = rgba(white,1)
@@ -82,19 +82,19 @@ render: (output) ->
 
 # Update the rendered output.
 update: (output, domEl) ->
-
   # Get our main DIV.
   div = $(domEl)
 
-  if @options.widgetEnable
-    # Get our pieces.
-    values = output.slice(0,-1).split(" ")
+  if @options.widgetEnable is false
+    div.remove()
+    return
 
-    # Initialize our HTML.
-    elapsedHTML = ''
+  # Get our pieces.
+  values = output.slice(0,-1).split(" ")
+
+  # Initialize our HTML.
+  elapsedHTML = ''
 
     # Sort out flex-box positioning.
     div.parent('div').css('order', options.order)
     div.parent('div').css('flex', '0 1 auto')
-  else
-    div.remove()

@@ -24,7 +24,7 @@ options =
   # Choose color theme.
   widgetTheme: "dark"                   # dark | light
 
-refreshFrequency: '1h'
+refreshFrequency: options.widgetEnable is false ? false : '1h'
 
 command: options.firstDay
 
@@ -165,18 +165,17 @@ updateBody: (rows, table) ->
         cell.addClass("grey")
 
 update: (output, domEl) ->
-
   div = $(domEl)
+  if options.widgetEnable is false
+    div.remove()
+    return
 
-  if @options.widgetEnable
-    rows = output.split("\n")
-    table = div.find("table")
+  rows = output.split("\n")
+  table = div.find("table")
 
-    @updateHeader rows, table
-    @updateBody rows, table
+  @updateHeader rows, table
+  @updateBody rows, table
 
     # Sort out flex-box positioning.
     div.parent('div').css('order', options.order)
     div.parent('div').css('flex', '0 1 auto')
-  else
-    div.remove()

@@ -14,7 +14,7 @@ options =
 
 command: "osascript 'Sidebar.widget/Battery.widget/battery.applescript'"
 
-refreshFrequency: '1s'
+refreshFrequency: options.widgetEnable is false ? false : '1s'
 
 style: """
 
@@ -105,36 +105,35 @@ render: (output) ->
 
 # Update the rendered output.
 update: (output, domEl) ->
-
   # Get our main DIV.
   div = $(domEl)
+  if options.widgetEnable is false
+    div.remove()
+    return
 
-  if @options.widgetEnable
-    # Get our pieces.
-    values = output.slice(0,-1).split(" ")
+  # Get our pieces.
+  values = output.slice(0,-1).split(" ")
 
-    # Initialize our HTML.
-    batteryHTML = ''
-    div.find('.bar').css('width', values[0])
-    div.find('.time').html(values[1])
+  # Initialize our HTML.
+  batteryHTML = ''
+  div.find('.bar').css('width', values[0])
+  div.find('.time').html(values[1])
 
-    if values[0] != "NA"
-      div.animate({ opacity: 1 }, 250)
-      if parseInt(values[0]) < 10
-        div.find('.bar').css('background-color', 'rgba(255,0,0,0.5)')
-      else
-        div.find('.bar').css('background-color', '')
-
-      if values[2] == 'charging'
-        div.find('.icon').html('<svg viewBox="0 0 6 12"><g transform="translate(-1332.000000, -610.000000)"><path d="M1338,610 L1332,616 L1335,617 L1332,622 L1338,616 L1335,615 L1338,610 Z"></path></g></svg>').show()
-      else
-        div.find('.icon').hide()
+  if values[0] != "NA"
+    div.animate({ opacity: 1 }, 250)
+    if parseInt(values[0]) < 10
+      div.find('.bar').css('background-color', 'rgba(255,0,0,0.5)')
     else
-      div.animate({ opacity: 0 }, 250)
-      div.parent('div').css('margin-top', '-1px')
+      div.find('.bar').css('background-color', '')
+
+    if values[2] == 'charging'
+      div.find('.icon').html('<svg viewBox="0 0 6 12"><g transform="translate(-1332.000000, -610.000000)"><path d="M1338,610 L1332,616 L1335,617 L1332,622 L1338,616 L1335,615 L1338,610 Z"></path></g></svg>').show()
+    else
+      div.find('.icon').hide()
+  else
+    div.animate({ opacity: 0 }, 250)
+    div.parent('div').css('margin-top', '-1px')
 
     # Sort out flex-box positioning.
     div.parent('div').css('order', options.order)
     div.parent('div').css('flex', '0 1 auto')
-  else
-    div.remove()

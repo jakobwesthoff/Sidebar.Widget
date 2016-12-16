@@ -14,7 +14,7 @@ options =
 appearance =
   iconSet       : 'original'        # "original" for the original icons
 
-refreshFrequency: '10m'             # Update every 10 minutes
+refreshFrequency: options.widgetEnable is false ? false: '10m' # Update every 10 minutes
 
 style: """
   white1    = rgba(white,1)
@@ -106,28 +106,28 @@ render: -> """
 
 update: (output, domEl) ->
   @$domEl = $(domEl)
+  if options.widgetEnable is false
+    @$domEl.remove()
+    return
 
-  if @options.widgetEnable
-    data    = JSON.parse(output)
-    channel = data?.query?.results?.channel
-    return @renderError(data) unless channel
+  data = JSON.parse(output)
+  channel = data?.query?.results?.channel
+  return @renderError(data) unless channel
 
-    if channel.title == "Yahoo! Weather - Error"
-      return @renderError(data, channel.item?.title)
+  if channel.title == "Yahoo! Weather - Error"
+    return @renderError(data, channel.item?.title)
 
-    @renderCurrent channel
+  @renderCurrent channel
 
-    @$domEl.find('.error').remove()
-    @$domEl.children().show()
+  @$domEl.find('.error').remove()
+  @$domEl.children().show()
 
     # Sort out flex-box positioning.
     $(domEl).parent('div').css('order', options.order)
     $(domEl).parent('div').css('flex', '0 1 auto')
-  else
-    @$domEl.remove()
 
 renderCurrent: (channel) ->
-  weather  = channel.item
+  weather = channel.item
   location = channel.location
 
   el = @$domEl.find('.wrapper')
