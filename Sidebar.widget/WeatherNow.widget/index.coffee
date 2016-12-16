@@ -122,9 +122,9 @@ update: (output, domEl) ->
   @$domEl.find('.error').remove()
   @$domEl.children().show()
 
-    # Sort out flex-box positioning.
-    $(domEl).parent('div').css('order', options.order)
-    $(domEl).parent('div').css('flex', '0 1 auto')
+  # Sort out flex-box positioning.
+  $(domEl).parent('div').css('order', options.order)
+  $(domEl).parent('div').css('flex', '0 1 auto')
 
 renderCurrent: (channel) ->
   weather = channel.item

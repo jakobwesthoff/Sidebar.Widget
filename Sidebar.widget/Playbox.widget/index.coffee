@@ -120,6 +120,6 @@ update: (output, domEl) ->
       else
         div.find('.art').css('background-image', 'url('+tArtwork+')')
 
-    # Sort out flex-box positioning.
-    div.parent('div').css('order', options.order)
-    div.parent('div').css('flex', '0 1 auto')
+  # Sort out flex-box positioning.
+  div.parent('div').css('order', options.order)
+  div.parent('div').css('flex', '0 1 auto')

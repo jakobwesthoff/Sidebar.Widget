@@ -107,6 +107,6 @@ update: (output, domEl) ->
   else
     div.find('.meta').css('display', 'none')
 
-    # Sort out flex-box positioning.
-    div.parent('div').css('order', options.order)
-    div.parent('div').css('flex', '0 1 auto')
+  # Sort out flex-box positioning.
+  div.parent('div').css('order', options.order)
+  div.parent('div').css('flex', '0 1 auto')

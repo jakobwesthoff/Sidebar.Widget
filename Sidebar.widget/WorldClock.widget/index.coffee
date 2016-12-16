@@ -111,6 +111,6 @@ update: (output, domEl) ->
   div.html("<div class='wrapper'>" + timeHTML + "</div>")
   # div.html("<div class='wrapper'>" + output + "</div>")
 
-    # Sort out flex-box positioning.
-    div.parent('div').css('order', options.order)
-    div.parent('div').css('flex', '0 1 auto')
+  # Sort out flex-box positioning.
+  div.parent('div').css('order', options.order)
+  div.parent('div').css('flex', '0 1 auto')

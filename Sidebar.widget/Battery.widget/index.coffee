@@ -134,6 +134,6 @@ update: (output, domEl) ->
     div.animate({ opacity: 0 }, 250)
     div.parent('div').css('margin-top', '-1px')
 
-    # Sort out flex-box positioning.
-    div.parent('div').css('order', options.order)
-    div.parent('div').css('flex', '0 1 auto')
+  # Sort out flex-box positioning.
+  div.parent('div').css('order', options.order)
+  div.parent('div').css('flex', '0 1 auto')
